@@ -31,7 +31,8 @@ float thickness;
 
 //image
 PImage  eraser;
-
+PImage yorud;
+boolean yorudOn;
 
 void setup() {
   size(1400, 900);
@@ -42,6 +43,7 @@ void setup() {
   selectedColor = black;
   eraser = loadImage("eraser.png");
   thickness = 2;
+  yorud = loadImage("vali.png");
 }
 
 
@@ -107,22 +109,28 @@ void draw () {
   fill(claw);
   circle (320, 320, 80);// eighth  color
   stroke(black);
-  
+
   //indicator for thickness
   strokeWeight(thickness);
   fill(selectedColor);
-  rect(40,460,320,200);
-  
-  
+  rect(40, 460, 320, 200);
+
+
   //image
-  tactileB(55,685,70,70);
+  tactileB(55, 685, 80, 80);
   strokeWeight(2);
   fill(white);
-  rect(55,685,70,70);
-  image(eraser,40,670,100,100);
+  rect(55, 685, 80, 80);
+  image(eraser, 55, 685, 80, 80);
+
+  tactileB(150, 685, 80, 80);
+  strokeWeight(2);
+  fill(white);
+  rect(150, 685, 80, 80);
+  image(yorud, 153, 688, 75, 75);
 
   //slider
-  tactileS(sliderX,400,15);
+  tactileS(sliderX, 400, 15);
   fill(ydblue);
   strokeWeight(2);
   line(40, 400, 360, 400);
@@ -133,7 +141,6 @@ void draw () {
 
 
   thickness = map(sliderX, 40, 360, 2, 80);
- 
 }
 
 
@@ -211,11 +218,14 @@ void mouseReleased() {
   if (dist(320, 320, mouseX, mouseY) <40) {
     selectedColor = claw;// ninth color 3rd circle
   }
-  controlSlider(); 
-  
+  controlSlider();
+
   if (mouseX>55 && mouseX<125 && mouseY>685 && mouseY<755)
-  selectedColor = white;
-  
+    selectedColor = white;
+
+  if (mouseX>150&& mouseX<230&&mouseY>685&&mouseY<765) {
+    yorudOn =!yorudOn;
+  }
 }
 
 
@@ -224,10 +234,31 @@ void mouseDragged() {
   if (mouseX > 400)
     line(pmouseX, pmouseY, mouseX, mouseY);
   controlSlider();
+
+  if (yorudOn == false) {
+    strokeWeight(2);
+    stroke(black);
+    line(pmouseX, pmouseY, mouseX, mouseY);
+  } else {
+  }
+  image(yorud, mouseX, mouseY, 100, 100);
+  yorudOn = true ;
 }
+
 
 void controlSlider() {
   if (mouseX>40 && mouseX<360 && mouseY>385 && mouseY<415) {
     sliderX = mouseX;
+  }
+}
+
+
+void yorudOnOff() {
+  if (yorudOn == true) {
+    stroke(255, 0, 0);
+    strokeWeight(5);
+  } else {
+    stroke(0);
+    strokeWeight(1);
   }
 }
