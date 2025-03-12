@@ -23,6 +23,7 @@ color white = #FFFFFF;
 color neptunevan = #45657e;
 color black = #000000;
 color lighty = #25cff2;
+color beige = #e8c39e;
 
 // slider
 color selectedColor;
@@ -44,6 +45,7 @@ void setup() {
   eraser = loadImage("eraser.png");
   thickness = 2;
   yorud = loadImage("vali.png");
+  yorudOn = false;
 }
 
 
@@ -141,6 +143,15 @@ void draw () {
 
 
   thickness = map(sliderX, 40, 360, 2, 80);
+  //new button
+  tactileB(250, 700, 120, 50);
+  strokeWeight(2);
+  fill(beige);
+  rect(250, 700, 120, 50);
+  fill(black);
+  textSize(40);
+  textAlign(CENTER, CENTER);
+  text("new", 310, 720);
 }
 
 
@@ -226,23 +237,26 @@ void mouseReleased() {
   if (mouseX>150&& mouseX<230&&mouseY>685&&mouseY<765) {
     yorudOn =!yorudOn;
   }
+  if (mouseX>250&&mouseX<370&&mouseY>700&&mouseY<750) {
+    fill(white);
+    noStroke();
+    rect(402, 0, 1000, 1000);
+    stroke(2);
+  }
 }
 
 
 void mouseDragged() {
-  stroke(selectedColor);
-  if (mouseX > 400)
-    line(pmouseX, pmouseY, mouseX, mouseY);
-  controlSlider();
-
-  if (yorudOn == false) {
-    strokeWeight(2);
-    stroke(black);
-    line(pmouseX, pmouseY, mouseX, mouseY);
-  } else {
+  if (mouseX > 400) {
+    if (yorudOn == false) {
+      strokeWeight(thickness);
+      stroke(selectedColor);
+      line(pmouseX, pmouseY, mouseX, mouseY);
+    } else {
+      image(yorud, mouseX, mouseY, 100, 100);
+    }
   }
-  image(yorud, mouseX, mouseY, 100, 100);
-  yorudOn = true ;
+  controlSlider();
 }
 
 
